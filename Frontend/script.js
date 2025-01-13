@@ -1,4 +1,4 @@
-const fetchHomeProducts = () => {
+const fetchProducts = () => {
     fetch("/api/products")
         .then((res) => res.json())
         .then((products) => {
@@ -23,11 +23,9 @@ const fetchHomeProducts = () => {
 };
 
 
-fetchHomeProducts();
-
+fetchProducts();
 
 // Add Product
-
 document.querySelector("#productForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("productName").value;
@@ -111,38 +109,31 @@ if (document.getElementById("productGallery")) {
         .catch((error) => console.error("Error fetching products:", error));
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const fetchProductGallery = () => {
-        const productGallery = document.getElementById("productGallery");
-        console.log(productGallery); // Check if this is `null` or valid
-        if (productGallery) {
-            fetch("/api/products")
-                .then((res) => res.json())
-                .then((products) => {
-                    console.log(products); // Verify the API response
-                    productGallery.innerHTML = ""; // Clear existing products
-                    products.forEach((product) => {
-                        const productDiv = document.createElement("div");
-                        productDiv.className = "product";
-                        productDiv.innerHTML = `
-                            <img src="${product.image}" alt="${product.name}" class="product-image" 
-                                onerror="this.onerror=null;this.src='https://via.placeholder.com/250';">
-                            <h3>${product.name}</h3>
-                            <p>${product.description}</p>
-                            <p>Price: $${product.price}</p>
-                            <button onclick="payForProduct(${product.price})" class="pay-btn">Buy Now</button>
-                        `;
-                        productGallery.appendChild(productDiv);
-                    });
-                })
-                .catch((error) => console.error("Error fetching products:", error));
-        } 
-    };
+const fetchProductGallery = () => {
+    const productGallery = document.getElementById("productGallery");
+    if (productGallery) {
+        fetch("/api/products")
+            .then((res) => res.json())
+            .then((products) => {
+                productGallery.innerHTML = ""; // Clear existing products
+                products.forEach((product) => {
+                    const productDiv = document.createElement("div");
+                    productDiv.className = "product";
+                    productDiv.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}" class="product-image" 
+                            onerror="this.onerror=null;this.src='https://via.placeholder.com/250';">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <p>Price: $${product.price}</p>
+                        <button onclick="payForProduct(${product.price})" class="pay-btn">Buy Now</button>
+                    `;
+                    productGallery.appendChild(productDiv);
+                });
+            });
+    }
+};
 
-    fetchProductGallery();
-});
-
-// Payment Function
+// Stripe Payment
 const payForProduct = (amount) => {
     fetch("/api/payment", {
         method: "POST",
@@ -155,3 +146,5 @@ const payForProduct = (amount) => {
         })
         .catch((error) => console.error("Payment error:", error));
 };
+
+fetchProductGallery();
