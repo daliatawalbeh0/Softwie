@@ -6,10 +6,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const app = express();
 const PORT = 3000;
 app.use(cors());
-app.use(express.json()); // Parse JSON request bodies
-app.use(express.static("Frontend")); // Serve static files from the Frontend folder
+app.use(express.json());
+app.use(express.static("Frontend")); 
 
-// In-memory product storage
 let products = [
     {
         id: 1,
@@ -29,7 +28,6 @@ let products = [
 
 // Routes
 
-// Serve the front-end for the root route
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/Frontend/index.html");
 });
@@ -90,7 +88,7 @@ app.post("/api/create-payment-intent", async (req, res) => {
 
     try {
         const paymentIntent = await stripe.paymentIntents.create({
-            amount: amount, // Amount in cents
+            amount: amount, 
             currency: "usd",
             payment_method_types: ["card"],
         });

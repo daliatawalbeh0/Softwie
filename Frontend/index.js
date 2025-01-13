@@ -10,6 +10,8 @@ const fetchProducts = () => {
                 div.className = "product";
                 div.innerHTML = `
                     <img src="${product.image}" alt="${product.name}" class="product-image">
+                                        <h2> ID : ${product.id}</h2>
+
                     <h2>${product.name}</h2>
                     <p>${product.description}</p>
                     <p>Price: $${product.price}</p>

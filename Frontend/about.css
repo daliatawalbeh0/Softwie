@@ -5,19 +5,26 @@
     font-family: Arial, sans-serif;
   }
   
+  /* Header Styling */
+  header {
+    background-color: #004aad; /* Consistent background with Contact Us */
+    padding: 10px 20px;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Navbar Styling */
   .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: #0056b3;
-    color: white;
+    flex-wrap: wrap; /* Ensure items wrap on smaller screens */
   }
   
-  .navbar .logo {
+  .logo {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #e83e8c;
+    color: #e83e8c; /* Highlight the logo with a pink color */
   }
   
   .nav-links {
@@ -29,28 +36,29 @@
   .nav-links a {
     text-decoration: none;
     color: white;
-    font-size: 1rem;
-  }
-  
-  .nav-links .active {
     font-weight: bold;
-    text-decoration: underline;
-    color: #e83e8c;
+    transition: color 0.3s ease;
   }
   
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: #e83e8c; /* Add a pink hover and active state */
+  }
+  
+  /* Hamburger Menu (For Small Screens) */
   .hamburger {
     display: none;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 5px;
     cursor: pointer;
   }
   
   .hamburger span {
     width: 25px;
     height: 3px;
-    background-color: white;
+    background: white;
+    border-radius: 5px;
   }
-  
   main {
     padding: 3rem 1rem;
     background-color: #f8f9fa;
@@ -109,3 +117,24 @@
     }
   }
   
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: #0056b3;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        text-align: center;
+        padding: 1em 0;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
