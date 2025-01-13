@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">My Product Gallery</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#category">Category</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="gallery" id="home"></section>
+        <section class="add-product">
+            <h3>Add Product</h3>
+            <form id="productForm">
+                <input type="text" id="productName" placeholder="Product Name" required />
+                <textarea id="productDescription" placeholder="Product Description" required></textarea>
+                <input type="number" id="productPrice" placeholder="Product Price" required />
+                <input type="url" id="productImage" placeholder="Product Image URL" required />
+                <button type="submit">Add Product</button>
+            </form>
+        </section>
+        <section class="edit-product" style="display: none;">
+            <h3>Edit Product</h3>
+            <form id="editForm" style="display: none;">
+                <input type="text" id="editProductName" placeholder="Product Name" required />
+                <textarea id="editProductDescription" placeholder="Product Description" required></textarea>
+                <input type="number" id="editProductPrice" placeholder="Product Price" required />
+                <input type="url" id="editProductImage" placeholder="Product Image URL" required />
+                <button type="submit">Update Product</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Product Gallery</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
