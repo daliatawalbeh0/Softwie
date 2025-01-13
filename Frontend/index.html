@@ -11,10 +11,10 @@
         <nav class="navbar">
             <div class="logo">My Product Gallery</div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#category">Category</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -24,8 +24,8 @@
         </nav>
     </header>
     <main>
-        <section class="gallery" id="home"></section>
-        <section class="add-product">
+        <div class="gallery" id="home"></div>
+        <section class="add-product" >
             <h3>Add Product</h3>
             <form id="productForm">
                 <input type="text" id="productName" placeholder="Product Name" required />
@@ -37,11 +37,11 @@
         </section>
         <section class="edit-product" style="display: none;">
             <h3>Edit Product</h3>
-            <form id="editForm" style="display: none;">
+            <form id="editForm">
                 <input type="text" id="editProductName" placeholder="Product Name" required />
                 <textarea id="editProductDescription" placeholder="Product Description" required></textarea>
                 <input type="number" id="editProductPrice" placeholder="Product Price" required />
-                <input type="url" id="editProductImage" placeholder="Product Image URL" required />
+                <input type="url" id="editProductImage" placeholder="Product Image URL"  />
                 <button type="submit">Update Product</button>
             </form>
         </section>

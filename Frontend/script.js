@@ -1,4 +1,4 @@
-const fetchProducts = () => {
+const fetchHomeProducts = () => {
     fetch("/api/products")
         .then((res) => res.json())
         .then((products) => {
@@ -8,8 +8,7 @@ const fetchProducts = () => {
                 const div = document.createElement("div");
                 div.className = "product";
                 div.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image" 
-                        onerror="this.onerror=null;this.src='https://via.placeholder.com/250';">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
                     <h2>${product.name}</h2>
                     <p>${product.description}</p>
                     <p>Price: $${product.price}</p>
@@ -23,9 +22,12 @@ const fetchProducts = () => {
         });
 };
 
-fetchProducts();
+
+fetchHomeProducts();
+
 
 // Add Product
+
 document.querySelector("#productForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("productName").value;
@@ -84,3 +86,72 @@ document.querySelector("#editForm").addEventListener("submit", (e) => {
     });
 });
 
+// Fetch and display products in the Products Page
+if (document.getElementById("productGallery")) {
+    fetch("/api/products")
+        .then((res) => res.json())
+        .then((products) => {
+            const productGallery = document.getElementById("productGallery");
+            productGallery.innerHTML = ""; // Clear existing products
+
+            products.forEach((product) => {
+                const productDiv = document.createElement("div");
+                productDiv.className = "product";
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image" 
+                        onerror="this.onerror=null;this.src='https://via.placeholder.com/250';">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <p>Price: $${product.price}</p>
+                    <button onclick="payForProduct(${product.price})" class="pay-btn">Buy Now</button>
+                `;
+                productGallery.appendChild(productDiv);
+            });
+        })
+        .catch((error) => console.error("Error fetching products:", error));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const fetchProductGallery = () => {
+        const productGallery = document.getElementById("productGallery");
+        console.log(productGallery); // Check if this is `null` or valid
+        if (productGallery) {
+            fetch("/api/products")
+                .then((res) => res.json())
+                .then((products) => {
+                    console.log(products); // Verify the API response
+                    productGallery.innerHTML = ""; // Clear existing products
+                    products.forEach((product) => {
+                        const productDiv = document.createElement("div");
+                        productDiv.className = "product";
+                        productDiv.innerHTML = `
+                            <img src="${product.image}" alt="${product.name}" class="product-image" 
+                                onerror="this.onerror=null;this.src='https://via.placeholder.com/250';">
+                            <h3>${product.name}</h3>
+                            <p>${product.description}</p>
+                            <p>Price: $${product.price}</p>
+                            <button onclick="payForProduct(${product.price})" class="pay-btn">Buy Now</button>
+                        `;
+                        productGallery.appendChild(productDiv);
+                    });
+                })
+                .catch((error) => console.error("Error fetching products:", error));
+        } 
+    };
+
+    fetchProductGallery();
+});
+
+// Payment Function
+const payForProduct = (amount) => {
+    fetch("/api/payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: amount * 100, currency: "usd" }), // Stripe expects amount in cents
+    })
+        .then((res) => res.json())
+        .then(({ clientSecret }) => {
+            alert(`Payment initiated for $${amount}. Please complete the payment.`);
+        })
+        .catch((error) => console.error("Payment error:", error));
+};
