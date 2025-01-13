@@ -1,9 +1,11 @@
+
+require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const app = express();
 const PORT = 3000;
-require("dotenv").config();
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
+app.use(cors());
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.static("Frontend")); // Serve static files from the Frontend folder
 
@@ -82,19 +84,23 @@ app.delete("/api/products/:id", (req, res) => {
 });
 
 // Stripe Payment API
-app.post("/api/payment", async (req, res) => {
-    const { amount, currency } = req.body;
+
+app.post("/api/create-payment-intent", async (req, res) => {
+    const { amount } = req.body;
 
     try {
         const paymentIntent = await stripe.paymentIntents.create({
-            amount,
-            currency,
+            amount: amount, // Amount in cents
+            currency: "usd",
+            payment_method_types: ["card"],
         });
+
         res.json({ clientSecret: paymentIntent.client_secret });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
+
 
 // Start the server
 app.listen(PORT, () => {

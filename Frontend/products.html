@@ -1,35 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - Product Gallery</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products - Product Gallery</title>
+  <link rel="stylesheet" href="products.css">
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">My Product Gallery</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html" class="active">Products</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="products">
-            <h2>All Products</h2>
-            <div id="productGallery"></div> <!-- Ensure this ID matches the JavaScript selector -->
-        </section>
-        
-        
-        
-    </main>
-    <footer>
-        <p>&copy; 2025 Product Gallery</p>
-    </footer>
-    <script src="script.js"></script>
+  <header>
+    <nav class="navbar">
+      <div class="logo">My Product Gallery</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html" class="active">Products</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section class="products">
+      <h2 class="products-heading">All Products</h2>
+      <div id="productGallery" class="product-gallery"></div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Complete Your Payment</h2>
+        <form id="payment-form">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="test@example.com" required />
+
+          <label for="card-element">Card Information</label>
+          <div id="card-element">
+            <!-- Stripe Card Element will be inserted here -->
+          </div>
+          <div id="card-errors" role="alert"></div>
+
+          <label for="name-on-card">Name on Card</label>
+          <input type="text" id="name-on-card" placeholder="John Doe" required />
+
+          <label for="country">Country or Region</label>
+          <select id="country" required>
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <option value="GB">United Kingdom</option>
+          </select>
+
+          <label for="postal-code">Postal Code</label>
+          <input type="text" id="postal-code" placeholder="12345" required />
+
+          <button id="submit-payment" type="submit">Pay</button>
+        </form>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2025 Product Gallery</p>
+  </footer>
+  <script src="products.js"></script>
 </body>
 </html>

@@ -19,10 +19,12 @@ p {
     margin: 0.5em 0;
 }
 
+
+/* Header Styling */
 header {
-    background-color: #0056b3;
+    background-color: #004aad;
+    padding: 10px 20px;
     color: white;
-    padding: 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -30,46 +32,39 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5em 1.5em;
-    max-width: 1200px;
-    margin: 0 auto;
+    flex-wrap: wrap; /* Ensure items wrap on smaller screens */
 }
 
 .logo {
-    font-size: 1.8em;
+    font-size: 1.8rem;
     font-weight: bold;
-    color: #e83e8c;
+    color: #ff69b4;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 1.5em;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-links li {
-    display: inline;
+    gap: 1.5rem;
 }
 
 .nav-links a {
     text-decoration: none;
     color: white;
     font-weight: bold;
-    font-size: 1em;
     transition: color 0.3s;
 }
 
-.nav-links a:hover {
-    color: #e83e8c;
+.nav-links a:hover,
+.nav-links a.active {
+    color: #ff69b4;
 }
 
+/* Hamburger Menu (Shown on smaller screens) */
 .hamburger {
     display: none;
     flex-direction: column;
+    gap: 5px;
     cursor: pointer;
-    gap: 0.3em;
 }
 
 .hamburger span {
@@ -84,7 +79,7 @@ header {
     .nav-links {
         display: none;
         flex-direction: column;
-        background-color: #0056b3;
+        background-color: #004aad;
         position: absolute;
         top: 60px;
         right: 0;
