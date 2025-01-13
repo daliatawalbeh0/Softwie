@@ -102,4 +102,13 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch((error) => console.error("Error creating payment intent:", error));
     });
   });
+  document.addEventListener("DOMContentLoaded", () => {
+    const hamburger = document.querySelector(".hamburger");
+    const navLinks = document.querySelector(".nav-links");
+  
+    // Toggle the nav menu
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+  });
   

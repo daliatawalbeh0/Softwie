@@ -25,7 +25,12 @@ const fetchProducts = () => {
 
 
 fetchProducts();
+const hamburger = document.querySelector(".hamburger");
+const navLinks = document.querySelector(".nav-links");
 
+hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+});
 // Add Product
 document.querySelector("#productForm").addEventListener("submit", (e) => {
     e.preventDefault();
@@ -86,9 +91,4 @@ document.querySelector("#editForm").addEventListener("submit", (e) => {
 });
 
 
-const hamburger = document.querySelector(".hamburger");
-const navLinks = document.querySelector(".nav-links");
 
-hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-});
