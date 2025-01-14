@@ -18,20 +18,20 @@ let products = [
         name: "Product 1",
         description: "Description of Product 1",
         price: 100,
-        image: "https://via.placeholder.com/250",
+        image: "/uploads/skincare.jpg",
     },
     {
         id: 2,
         name: "Product 2",
         description: "Description of Product 2",
         price: 200,
-        image: "https://via.placeholder.com/250",
+        image: "/uploads/skin2.jpg",
     },
 ];
 const storage = multer.diskStorage({
-    destination: "./Frontend/uploads", // Path to save uploaded images
+    destination: "./Frontend/uploads", 
     filename: (req, file, cb) => {
-      cb(null, `${Date.now()}-${file.originalname}`); // Save file with a timestamp
+      cb(null, `${Date.now()}-${file.originalname}`); 
     },
   });
 const upload = multer({ storage });
