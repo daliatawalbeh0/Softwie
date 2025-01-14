@@ -66,18 +66,22 @@ app.post("/api/products", upload.single("image"), (req, res) => {
   });
 
 // Update a product
-app.put("/api/products/:id", (req, res) => {
+app.put("/api/products/:id", upload.single("image"), (req, res) => {
     const product = products.find((p) => p.id === parseInt(req.params.id));
     if (!product) return res.status(404).send("Product not found");
 
-    const { name, description, price, image } = req.body;
+    const { name, description, price } = req.body;
+    if (req.file) {
+        product.image = `/uploads/${req.file.filename}`; // Update the image if a new one is uploaded
+    }
+
     product.name = name || product.name;
     product.description = description || product.description;
     product.price = price || product.price;
-    product.image = image || product.image;
 
-    res.json(product);
+    res.json({ message: "Product updated successfully", product });
 });
+
 
 // Delete a product
 app.delete("/api/products/:id", (req, res) => {

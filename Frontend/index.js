@@ -87,25 +87,32 @@ const editProduct = (id) => {
             document.getElementById("editProductName").value = product.name;
             document.getElementById("editProductDescription").value = product.description;
             document.getElementById("editProductPrice").value = product.price;
+            const imagePreview = document.querySelector(".edit-image-preview");
+            imagePreview.innerHTML = `
+                <img src="${product.image}" alt="Current Image" width="200" />
+            `;
+
             document.querySelector(".edit-product").style.display = "block";
         });
 };
 
-document.querySelector("#editForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = document.getElementById("editProductName").value;
-    const description = document.getElementById("editProductDescription").value;
-    const price = document.getElementById("editProductPrice").value;
-    const image = document.getElementById("editProductImage").value;
 
-    fetch(`/api/products/${editingId}`, {
+document.querySelector("#editForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form); 
+
+    const response = await fetch(`/api/products/${editingId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, description, price, image }),
-    }).then(() => {
-        fetchProducts();
-        document.querySelector(".edit-product").style.display = "none";
+        body: formData, 
     });
+
+    const data = await response.json();
+    alert(data.message);
+
+    fetchProducts();
+    document.querySelector(".edit-product").style.display = "none";
 });
 
 
