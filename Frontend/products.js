@@ -38,10 +38,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const productDiv = document.createElement("div");
             productDiv.className = "product";
             productDiv.innerHTML = `
-              <img src="${product.image}" alt="${product.name}" class="product-image">
-              <h3>${product.name}</h3>
-              <p>${product.description}</p>
-              <p>Price: $${(product.price / 100).toFixed(2)}</p>
+  <div class="product-card">
+    <div class="product-image-container">
+      <img src="${product.image}" alt="${product.name}" class="product-image">
+    </div>
+<div class="product-info">
+      <h3 class="product-title">ID: ${product.id}</h3>
+      <h3 class="product-title">${product.name}</h3>
+      <p class="product-description">${product.description}</p>
+      <p class="product-price">Price: $${(product.price / 100).toFixed(2)}</p>
+
+
+
               <button data-amount="${product.price}" class="pay-btn">Buy Now</button>
             `;
             productGallery.appendChild(productDiv);

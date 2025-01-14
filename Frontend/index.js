@@ -8,15 +8,15 @@ const fetchProducts = () => {
                 const div = document.createElement("div");
                 div.className = "product";
                 div.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image">
-                    <h2>ID: ${product.id}</h2>
-                    <h2>${product.name}</h2>
-                    <p>${product.description}</p>
-                    <p>Price: $${product.price}</p>
-                    <div class="product-actions">
-                        <button onclick="deleteProduct(${product.id})" class="delete-btn">Delete</button>
-                        <button onclick="editProduct(${product.id})" class="edit-btn">Edit</button>
-                    </div>
+                  <img src="${product.image}" alt="${product.name}" class="product-image">
+    <h2>ID: ${product.id}</h2>
+    <h2>${product.name}</h2>
+    <p>${product.description}</p>
+    <p>Price: $${product.price}</p>
+    <div class="product-actions">
+        <button onclick="deleteProduct(${product.id})" class="delete-btn">Delete</button>
+        <button onclick="editProduct(${product.id})" class="edit-btn">Edit</button>
+    </div>
                 `;
                 gallery.appendChild(div);
             });

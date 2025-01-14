@@ -99,6 +99,16 @@ header {
     max-width: 1200px;
     margin: 0 auto;
 }
+.product-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s, box-shadow 0.3s;
+}
 
 .product {
     background-color: white;
@@ -272,3 +282,15 @@ footer {
 #submit-payment:hover {
     background-color: #0056b3;
 }
+.product-image-container {
+    width: 100%;
+    background-color: #f9f9f9;
+    padding: 10px;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+  }

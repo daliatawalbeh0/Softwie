@@ -15,15 +15,15 @@ app.use(express.static("Frontend"));
 let products = [
     {
         id: 1,
-        name: "Product 1",
-        description: "Description of Product 1",
+        name: "Skin Care Package",
+        description: "contain olay creaem , cetaphil cleasner ",
         price: 100,
         image: "/uploads/skincare.jpg",
     },
     {
         id: 2,
-        name: "Product 2",
-        description: "Description of Product 2",
+        name: "Skin Care Morning Package",
+        description: "contain salsilic acid serum",
         price: 200,
         image: "/uploads/skin2.jpg",
     },
