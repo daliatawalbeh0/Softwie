@@ -1,6 +1,9 @@
 
 require("dotenv").config();
 const express = require("express");
+const path = require("path");
+const multer = require("multer"); 
+
 const cors = require("cors");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const app = express();
@@ -25,12 +28,16 @@ let products = [
         image: "https://via.placeholder.com/250",
     },
 ];
+const storage = multer.diskStorage({
+    destination: "./Frontend/uploads", // Path to save uploaded images
+    filename: (req, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`); // Save file with a timestamp
+    },
+  });
+const upload = multer({ storage });
 
-// Routes
+app.use("/uploads", express.static(path.join(__dirname, "Frontend/uploads")));
 
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/Frontend/index.html");
-});
 
 // Get all products
 app.get("/api/products", (req, res) => {
@@ -45,18 +52,18 @@ app.get("/api/products/:id", (req, res) => {
 });
 
 // Add a new product
-app.post("/api/products", (req, res) => {
-    const { name, description, price, image } = req.body;
-    const newProduct = {
-        id: products.length + 1,
-        name,
-        description,
-        price,
-        image: image || "https://via.placeholder.com/250",
-    };
-    products.push(newProduct);
-    res.status(201).json(newProduct);
-});
+app.post("/api/products", upload.single("image"), (req, res) => {
+    const { name, description, price } = req.body;
+    const imageUrl = `/uploads/${req.file.filename}`; 
+
+    // Save the product in your database (example product object)
+    const product = { id: Date.now(), name, description, price, image: imageUrl };
+  
+    // Mock database operation (replace with real database logic)
+    products.push(product);
+  
+    res.status(201).json({ message: "Product created successfully", product });
+  });
 
 // Update a product
 app.put("/api/products/:id", (req, res) => {
@@ -99,6 +106,25 @@ app.post("/api/create-payment-intent", async (req, res) => {
     }
 });
 
+  
+// Route to upload product images
+app.post("/upload", upload.single("image"), (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded!" });
+    }
+  
+    const { productName } = req.body; // Assuming the form sends `productName`
+    const imagePath = `/uploads/${req.file.filename}`; // File path for the uploaded image
+  
+    res.status(201).json({
+      message: "Image uploaded successfully!",
+      product: {
+        name: productName,
+        image: imagePath,
+      },
+    });
+  });
+  
 
 // Start the server
 app.listen(PORT, () => {

@@ -1,4 +1,3 @@
-
 const fetchProducts = () => {
     fetch("/api/products")
         .then((res) => res.json())
@@ -10,8 +9,7 @@ const fetchProducts = () => {
                 div.className = "product";
                 div.innerHTML = `
                     <img src="${product.image}" alt="${product.name}" class="product-image">
-                                        <h2> ID : ${product.id}</h2>
-
+                    <h2>ID: ${product.id}</h2>
                     <h2>${product.name}</h2>
                     <p>${product.description}</p>
                     <p>Price: $${product.price}</p>
@@ -26,6 +24,7 @@ const fetchProducts = () => {
 };
 
 
+
 fetchProducts();
 const hamburger = document.querySelector(".hamburger");
 const navLinks = document.querySelector(".nav-links");
@@ -33,24 +32,41 @@ const navLinks = document.querySelector(".nav-links");
 hamburger.addEventListener("click", () => {
     navLinks.classList.toggle("active");
 });
-// Add Product
-document.querySelector("#productForm").addEventListener("submit", (e) => {
+// Add Product// Add Product with Image Upload
+document.querySelector("#productForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = document.getElementById("productName").value;
-    const description = document.getElementById("productDescription").value;
-    const price = document.getElementById("productPrice").value;
-    const image = document.getElementById("productImage").value;
-
-    fetch("/api/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, description, price, image }),
-    }).then(() => {
-        fetchProducts();
-        e.target.reset();
+  
+    const formData = new FormData(e.target); // Automatically includes all form inputs
+  
+    const response = await fetch("/api/products", {
+      method: "POST",
+      body: formData,
     });
-});
-
+  
+    const data = await response.json();
+    alert(data.message);
+  
+    // Add the new product to the gallery
+    const gallery = document.querySelector(".gallery");
+    const productDiv = document.createElement("div");
+    productDiv.className = "product";
+    productDiv.innerHTML = `
+      <img src="${data.product.image}" alt="${data.product.name}" class="product-image">
+      <h2>ID: ${data.product.id}</h2>
+      <h2>${data.product.name}</h2>
+      <p>${data.product.description}</p>
+      <p>Price: $${data.product.price}</p>
+      <div class="product-actions">
+        <button onclick="deleteProduct(${data.product.id})" class="delete-btn">Delete</button>
+        <button onclick="editProduct(${data.product.id})" class="edit-btn">Edit</button>
+      </div>
+    `;
+    gallery.appendChild(productDiv);
+  
+    // Reset the form
+    e.target.reset();
+  });
+  
 // Delete Product with Confirmation Alert
 const deleteProduct = (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this product?");
@@ -92,5 +108,32 @@ document.querySelector("#editForm").addEventListener("submit", (e) => {
     });
 });
 
+
+
+
+const uploadForm = document.getElementById("productForm");
+  const productGallery = document.getElementById("productGallery");
+
+  uploadForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(uploadForm);
+
+    const response = await fetch("/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+    alert(data.message);
+
+    // Display the uploaded product
+    const productDiv = document.createElement("div");
+    productDiv.innerHTML = `
+      <h3>${data.product.name}</h3>
+      <img src="${data.product.image}" alt="${data.product.name}" width="200" />
+    `;
+    productGallery.appendChild(productDiv);
+  });
 
 

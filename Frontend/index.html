@@ -29,12 +29,13 @@
         <div class="gallery" id="home"></div>
         <section class="add-product" >
             <h3>Add Product</h3>
-            <form id="productForm">
+            <form id="productForm" enctype="multipart/form-data">
                 <input type="text" id="productName" placeholder="Product Name" required />
                 <textarea id="productDescription" placeholder="Product Description" required></textarea>
                 <input type="number" id="productPrice" placeholder="Product Price" required />
-                <input type="url" id="productImage" placeholder="Product Image URL" required />
+                <input type="file" name="image" accept="image/*" required />
                 <button type="submit">Add Product</button>
+                
             </form>
         </section>
         <section class="form-container edit-product" style="display: none;">
